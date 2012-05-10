@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *		http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -189,7 +189,6 @@ static void set_speaker_light_locked_dual (struct light_device_t *dev, struct li
 
 }
 
-
 static void handle_speaker_battery_locked (struct light_device_t *dev) {
 	if (is_lit (&g_battery) && is_lit (&g_notification)) {
 		set_speaker_light_locked_dual (dev, &g_battery, &g_notification);
@@ -200,35 +199,11 @@ static void handle_speaker_battery_locked (struct light_device_t *dev) {
 	}
 }
 
-static int set_light_buttons (struct light_device_t* dev,
-		struct light_state_t const* state) {
-	int err = 0;
-	int on = is_lit (state);
-    char orientprop[PROPERTY_VALUE_MAX];
-	pthread_mutex_lock (&g_lock);
-
-    if (property_get("sys.orientation.landscape", orientprop, NULL)
-            && strcmp(orientprop, "1") == 0)
-    {
-        err = write_int (BUTTON_L_FILE, state->color&0xff);
-        err = write_int (BUTTON_P_FILE, 0);
-    }
-    else
-    {
-    	err = write_int (BUTTON_P_FILE, state->color&0xff);
-        write_int (BUTTON_L_FILE, 0);
-    }
-	pthread_mutex_unlock (&g_lock);
-
-	return 0;
-}
-
-
 static int rgb_to_brightness(struct light_state_t const* state)
 {
-    int color = state->color & 0x00ffffff;
-    return ((77*((color>>16)&0x00ff))
-            + (150*((color>>8)&0x00ff)) + (29*(color&0x00ff))) >> 8;
+	int color = state->color & 0x00ffffff;
+	return ((77*((color>>16)&0x00ff))
+			+ (150*((color>>8)&0x00ff)) + (29*(color&0x00ff))) >> 8;
 }
 
 static int set_light_backlight(struct light_device_t* dev,
@@ -242,6 +217,26 @@ static int set_light_backlight(struct light_device_t* dev,
 	err = write_int(LCD_BACKLIGHT_FILE, brightness);
 	pthread_mutex_unlock(&g_lock);
 	return err;
+}
+
+static int set_light_buttons (struct light_device_t* dev,
+		struct light_state_t const* state) {
+	int err = 0;
+	int brightness = rgb_to_brightness(state);
+	char orientprop[PROPERTY_VALUE_MAX];
+
+	pthread_mutex_lock (&g_lock);
+	if (property_get("sys.orientation.landscape", orientprop, NULL)
+			&& strcmp(orientprop, "1") == 0) {
+		err = write_int (BUTTON_L_FILE, brightness);
+		err = write_int (BUTTON_P_FILE, 0);
+	} else {
+		err = write_int (BUTTON_P_FILE, brightness);
+		err = write_int (BUTTON_L_FILE, 0);
+	}
+	pthread_mutex_unlock (&g_lock);
+
+	return 0;
 }
 
 static int set_light_battery (struct light_device_t* dev,
@@ -284,7 +279,7 @@ static int open_lights (const struct hw_module_t* module, char const* name,
 			struct light_state_t const* state);
 
 	if (0 == strcmp(LIGHT_ID_BACKLIGHT, name)) {
-        	set_light = set_light_backlight;
+		set_light = set_light_backlight;
 	}
 	else if (0 == strcmp(LIGHT_ID_BUTTONS, name)) {
 		set_light = set_light_buttons;
