@@ -27,7 +27,7 @@ $(call inherit-product, device/htc/vivow/media_htcaudio.mk)
 
 $(call inherit-product, frameworks/base/build/phone-hdpi-512-dalvik-heap.mk)
 
-$(call inherit-product-if-exists, vendor/htc/vivow/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/htc/vivow/vivow-vendor.mk)
 
 # The gps config appropriate for this device
 
