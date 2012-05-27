@@ -3,7 +3,7 @@ $(call inherit-product, device/htc/vivow/full_vivow.mk)
 
 # Inherit some common evervolv stuff.
 $(call inherit-product, vendor/ev/config/common_full_phone.mk)
-$(call inherit-product, vendor/cm/config/gsm.mk)
+$(call inherit-product, vendor/ev/config/gsm.mk)
 
 #
 # Setup device specific product configuration.
