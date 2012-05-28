@@ -107,10 +107,6 @@
         <item>0</item>
     </integer-array>
     
-    <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
-         specified -->
-    <string name="default_wallpaper_component">com.android.wallpaper/.nexus.NexusWallpaper</string>
-
     <integer name="config_deskDockKeepsScreenOn">0</integer>
 
     <!-- Default blink frequency for notification LED is 9 seconds. -->
@@ -177,6 +173,10 @@
         <item>5</item>
         <item>7</item>
     </integer-array>
+
+    <!-- Component name of the default wallpaper. This will be ImageWallpaper if not 
+         specified -->
+    <string name="default_wallpaper_component">@null</string>
 
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
