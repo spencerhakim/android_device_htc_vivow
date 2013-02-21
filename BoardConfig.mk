@@ -31,6 +31,9 @@ USE_CAMERA_STUB := true
 # inherit from the proprietary version
 -include vendor/htc/vivow/BoardConfigVendor.mk
 
+# inherit wifi defines
+-include device/htc/msm7x30-common/bcm4329.mk
+
 TARGET_BOOTLOADER_BOARD_NAME := vivow
 
 # Use stock libril for now
