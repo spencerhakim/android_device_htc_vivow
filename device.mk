@@ -177,8 +177,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/htc/vivow/media_profiles.xml:system/etc/media_profiles.xml
 
-# Kernel modules
-#PRODUCT_COPY_FILES += \
+# Broadcom firmware
+PRODUCT_PACKAGES += \
+    fw_bcm4329.bin \
+    fw_bcm4329_apsta.bin
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 LOCAL_KERNEL := device/htc/vivow/prebuilt/kernel
