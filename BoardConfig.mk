@@ -32,9 +32,16 @@ USE_CAMERA_STUB := true
 -include vendor/htc/vivow/BoardConfigVendor.mk
 
 # inherit wifi defines
--include device/htc/msm7x30-common/bcm4329.mk
+-include device/htc/msm7x30-common/bcmdhd.mk
 
 TARGET_BOOTLOADER_BOARD_NAME := vivow
+
+# Adreno
+BOARD_EGL_NEEDS_LEGACY_FB := false
+
+# Audio
+BOARD_USES_QCOM_AUDIO_VOIPMUTE := false
+BOARD_USES_QCOM_AUDIO_RESETALL := false
 
 # Use stock libril for now
 BOARD_USE_NEW_LIBRIL_HTC := true
@@ -52,8 +59,8 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
 
 BOARD_HAVE_HTC_FFC := true
 BOARD_USE_REVERSE_FFC := true
-BOARD_USES_HTC_GB_CAMERA := true
-BOARD_USES_LEGACY_OVERLAY := true
+#BOARD_USES_HTC_GB_CAMERA := true
+#BOARD_USES_LEGACY_OVERLAY := true
 
 # Workaround for Vivow's broken overlay scaling
 #BOARD_OVERLAY_MINIFICATION_LIMIT := 2
@@ -65,14 +72,9 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 1232072704
 BOARD_BOOTIMAGE_PARTITION_SIZE := 4194304
 BOARD_FLASH_BLOCK_SIZE := 262144
 
-TARGET_KERNEL_SOURCE := kernel/htc/msm7x30
+TARGET_KERNEL_SOURCE := kernel/htc/msm7x30-3.0
 TARGET_KERNEL_CONFIG := evervolv_vivow_defconfig
 BUILD_KERNEL := true
-KERNEL_TOOLCHAIN_PREFIX:=$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-linux-linaro-4.7/bin/arm-eabi-
-
-TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
-TARGET_PREBUILT_KERNEL := device/htc/vivow/prebuilt/kernel
-TARGET_PREBUILT_RECOVERY_KERNEL := device/htc/vivow/prebuilt/kernel
 
 BOARD_HAS_LARGE_FILESYSTEM := true
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -80,3 +82,6 @@ BOARD_SDCARD_DEVICE_PRIMARY := /dev/block/mmcblk1p1
 BOARD_SDCARD_DEVICE_SECONDARY := /dev/block/mmcblk1
 BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p2
 BOARD_USES_MMCUTILS := true
+
+BOARD_VOLD_EMMC_SHARES_DEV_MAJOR := true
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file

@@ -34,6 +34,7 @@ PRODUCT_COPY_FILES += device/common/gps/gps.conf_US:system/etc/gps.conf
 
 PRODUCT_COPY_FILES += \
     device/htc/vivow/init.vivow.rc:root/init.vivow.rc \
+    device/htc/vivow/init.vivow.usb.rc:root/init.vivow.usb.rc \
     device/htc/vivow/ueventd.vivow.rc:root/ueventd.vivow.rc
 
 PRODUCT_COPY_FILES += \
@@ -169,30 +170,16 @@ PRODUCT_COPY_FILES += \
     device/htc/vivow/dsp/soundimage/srsfx_trumedia_movie.cfg:system/etc/soundimage/srsfx_trumedia_movie.cfg \
     device/htc/vivow/dsp/soundimage/srsfx_trumedia_music.cfg:system/etc/soundimage/srsfx_trumedia_music.cfg \
     device/htc/vivow/dsp/soundimage/srsfx_trumedia_voice.cfg:system/etc/soundimage/srsfx_trumedia_voice.cfg
- 
+
+# Wifi firmware
+$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4329/device-bcm.mk)
+
 PRODUCT_COPY_FILES += \
     device/htc/vivow/vold.fstab:system/etc/vold.fstab
 
 # media config xml file
 PRODUCT_COPY_FILES += \
     device/htc/vivow/media_profiles.xml:system/etc/media_profiles.xml
-
-# Broadcom firmware
-PRODUCT_PACKAGES += \
-    fw_bcm4329.bin \
-    fw_bcm4329_apsta.bin
-
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/htc/vivow/prebuilt/kernel
-else
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
-PRODUCT_COPY_FILES += \
-    device/htc/vivow/prebuilt/bcm4329.ko:system/lib/modules/bcm4329.ko
 
 # Softkey Rotation Script
 PRODUCT_COPY_FILES += \
