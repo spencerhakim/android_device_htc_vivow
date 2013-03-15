@@ -118,6 +118,7 @@ PRODUCT_COPY_FILES += \
 
 # Audio DSP Profiles
 PRODUCT_COPY_FILES += \
+    device/htc/vivow/dsp/audio_policy.conf:system/etc/audio_policy.conf \
     device/htc/vivow/dsp/AdieHWCodec.csv:system/etc/AdieHWCodec.csv \
     device/htc/vivow/dsp/AdieHWCodec_NEL.csv:system/etc/AdieHWCodec_NEL.csv \
     device/htc/vivow/dsp/AIC3254_REG.csv:system/etc/AIC3254_REG.csv \
@@ -179,6 +180,7 @@ PRODUCT_COPY_FILES += \
 
 # media config xml file
 PRODUCT_COPY_FILES += \
+    device/htc/vivow/media_codecs.xml:system/etc/media_codecs.xml \
     device/htc/vivow/media_profiles.xml:system/etc/media_profiles.xml
 
 # Softkey Rotation Script
