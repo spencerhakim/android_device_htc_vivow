@@ -163,18 +163,6 @@ on property:ro.use_data_netmgrd=false
     # netmgr not supported on specific target
     stop netmgrd
 
-service htc_ebdlogd /system/bin/htc_ebdlogd -s -k -P 7
-    class main
-    user root
-    disabled
-    oneshot
-
-service htc_ebdlogd_rel /system/bin/htc_ebdlogd -s -k
-    class main
-    user root
-    disabled
-    oneshot
-
 service lights_landscape /system/bin/sh /system/etc/rotate_lights.sh 1
     class main
     user root
@@ -186,12 +174,6 @@ service lights_portrait /system/bin/sh /system/etc/rotate_lights.sh 0
     user root
     disabled
     oneshot
-
-on property:ro.build.tags=test-keys
-    start htc_ebdlogd
-
-on property:ro.build.tags=release-keys
-    start htc_ebdlogd_rel
 
 on property:sys.orientation.landscape=1
     start lights_landscape
