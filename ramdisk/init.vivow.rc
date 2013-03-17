@@ -10,15 +10,20 @@ on early-init
     symlink /storage/sdcard0 /mnt/sdcard
 
 on early-fs
-    mkdir /system
-    mkdir /data 0771 system system
-    mkdir /cache 0770 system cache
     mkdir /devlog 0700 root root
-    mount ext4 /dev/block/mmcblk0p25 /system wait ro barrier=1
-    mount ext4 /dev/block/mmcblk0p26 /data wait noatime nosuid nodev barrier=1 noauto_da_alloc
-    mount ext4 /dev/block/mmcblk0p27 /cache wait noatime nosuid nodev barrier=1
-    mount ext4 /dev/block/mmcblk0p28 /devlog wait noatime nosuid nodev barrier=1
 
+on fs
+    mount_all /fstab.vivow
+
+on post-fs
+    chmod 0771 /cache
+    chown system cache /cache
+    chmod 0700 /devlog
+    chown root root /devlog
+
+on post-fs-data
+    chmod 0771 /data
+    chown system system /dat
     mkdir /data/radio 0770 radio radio
     mkdir /data/misc 1771 system misc
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -26,6 +31,10 @@ on early-fs
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
 
+    # Set indication (checked by vold) that we have finished this action
+    setprop vold.post_fs_data_done 1
+
+on boot
     chown radio system /sys/module/gpio_event/parameters/phone_call_status
     chmod 0664         /sys/module/gpio_event/parameters/phone_call_status
 
@@ -58,9 +67,10 @@ on early-fs
     chmod 0660        /sys/class/power_supply/battery/charger_control
 
     # bluetooth power up/down interface
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
-    chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
-    chmod 0660                /sys/class/rfkill/rfkill0/state
+    chown bluetooth bluetooth /dev/ttyHS0
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
+    chmod 0660 /sys/class/rfkill/rfkill0/state
 
     # Bluetooth MAC address path
     chown bluetooth net_bt_stack /sys/module/htc_bdaddress/parameters/bdaddress
