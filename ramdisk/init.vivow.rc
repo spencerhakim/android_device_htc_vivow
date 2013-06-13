@@ -90,6 +90,12 @@ on boot
     chown system camera /sys/class/leds/flashlight/brightness
     chmod 0660          /sys/class/leds/flashlight/brightness
 
+    # Vibrator
+    chown system system /sys/class/timed_output/vibrator/voltage_level
+
+    # Touchscreen
+    chown system system /sys/android_touch/sweep2wake
+
     # MMC devices readahead performance tweak
     write /sys/block/mmcblk1/bdi/read_ahead_kb 1024
 
