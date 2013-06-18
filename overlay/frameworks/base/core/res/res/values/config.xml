@@ -108,7 +108,10 @@
     </integer-array>
     
     <integer name="config_deskDockKeepsScreenOn">0</integer>
-
+    
+    <!-- Default color for notification LED is green -->
+    <color name="config_defaultNotificationColor">#ff00ff00</color>
+    
     <!-- Default blink frequency for notification LED is 9 seconds. -->
     <integer name="config_defaultNotificationLedOff">9000</integer>
 
@@ -192,6 +195,18 @@
 
     <!-- Whether to set a system prop (sys.orientation.landscape)
          when rotating for devices that have rotating buttons -->
-    <bool name="config_setLandscapeProp">true</bool>
+    <!-- <bool name="config_setLandscapeProp">true</bool> -->
+    
+    <!-- Hardware 'face' keys present on the device, stored as a bit field.
+         This integer should equal the sum of the corresponding value for each
+         of the following keys present:
+             1 - Home
+             2 - Back
+             4 - Menu
+             8 - Assistant (search)
+             16 - App switch
+         For example, a device with Home, Back and Menu keys would set this
+         config to 7. -->
+    <integer name="config_deviceHardwareKeys">15</integer>
 
 </resources>
